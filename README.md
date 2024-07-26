@@ -5,7 +5,6 @@ Documentation and Projects for haptic feedback systems. Explore and contribute t
 # Project Tree View
 - [LICENSE.md](https://github.com/alinajm7/Haptisense/blob/main/LICENSE.md)
 - [docs](https://github.com/alinajm7/Haptisense/tree/main/docs)/
-- [generate_tree.sh](https://github.com/alinajm7/Haptisense/blob/main/generate_tree.sh)
 - [hardware](https://github.com/alinajm7/Haptisense/tree/main/hardware)/
   - [electronic_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components)/
     - [01_microcontrollers_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/01_microcontrollers_modules)/
