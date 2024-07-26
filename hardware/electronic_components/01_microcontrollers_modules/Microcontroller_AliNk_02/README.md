@@ -1,1 +1,1 @@
-Backup of electronic shematic and PCB design from https://easyeda.com/
+Backup of Electronic Components' Schematics and PCB Design in EasyEDA [https://easyeda.com/]
