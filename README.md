@@ -7,11 +7,10 @@ Documentation and Projects for haptic feedback systems. Explore and contribute t
 - [docs](https://github.com/alinajm7/Haptisense/tree/main/docs)/
 - [hardware](https://github.com/alinajm7/Haptisense/tree/main/hardware)/
   - [electronic_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components)/
-    - [01_microcontrollers_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/01_microcontrollers_modules)/
-      - [microcontrollers_note.md](https://github.com/alinajm7/Haptisense/blob/main/hardware/electronic_components/01_microcontrollers_modules/microcontrollers_note.md)
-    - [02_power_driver_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/02_power_driver_modules)/
-    - [03_haptic_interface_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/03_haptic_interface_modules)/
-    - [10_integrated_designs](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/10_integrated_designs)/
+    - [microcontrollers_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/01_microcontrollers_modules)/
+    - [power_driver_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/02_power_driver_modules)/
+    - [haptic_interface_modules](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/03_haptic_interface_modules)/
+    - [integrated_designs](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/10_integrated_designs)/
   - [physical_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components)/
     - [3d_models](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/3d_models)/
       - [cases](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/3d_models/cases)/
