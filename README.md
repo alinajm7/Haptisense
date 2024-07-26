@@ -13,9 +13,7 @@ Documentation and Projects for haptic feedback systems. Explore and contribute t
     - [integrated_designs](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/10_integrated_designs)/
   - [physical_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components)/
     - [3d_models](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/3d_models)/
-      - [cases](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/3d_models/cases)/
     - [laser_cut_files](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/laser_cut_files)/
-- [project_tree_view.md](https://github.com/alinajm7/Haptisense/blob/main/project_tree_view.md)
 - [software](https://github.com/alinajm7/Haptisense/tree/main/software)/
   - [microcontroller_firmware](https://github.com/alinajm7/Haptisense/tree/main/software/microcontroller_firmware)/
   - [unity_application](https://github.com/alinajm7/Haptisense/tree/main/software/unity_application)/
