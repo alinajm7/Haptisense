@@ -19,7 +19,13 @@ To manually set up the haptic device in your Unity project, follow these steps:
 1. **Create an Empty GameObject:**  
    - In your scene, create an empty GameObject.
    - Add the `MicroControllerCommunicationManager` component to this GameObject.  
-   This component manages communication with the haptic device.
+   This component manages communication with the haptic device. The microcontroller expects a string that starts with `@` and ends with `#`. Use the following commands:
+   - `@B#` to turn on the reading inputs process.
+   - `@F#` to turn off the reading inputs process.
+
+   This device has 58 actuators. The input should be an array of 580 numeric digits (58 sets of 10), where the first 5 digits indicate the low duration, and the second 5 digits indicate the high duration. Including the starting, ending characters, and a null terminator, the total transmission length is 582 characters.
+
+   **Note:** If either the low duration or high duration is set to `0`, the microcontroller will consider it an error and turn off the actuator for safety reasons.
 
 ### 2. Setting Up the Actuator Manager
 
