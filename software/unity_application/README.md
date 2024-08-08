@@ -30,13 +30,35 @@ To manually set up the haptic device in your Unity project, follow these steps:
 2. **Add the Following Components:**
 
    - **Collider (with "Is Trigger" checked):**  
-     Define the scanning area for the actuators.
+     Defines the scanning area for the actuators.
 
    - **Rigidbody:**  
      Enables object detection functions.
 
    - **Actuators Manager:**  
-     Manages the behavior of actuators, such as scanning distance, power factor, min & max threshold values, and the order of actuators in the array.
+     Manages the behavior of actuators, including properties like scanning distance, power factor, and distance-based weighting.  
+     
+     **Properties:**
+     - **Scanning Distance:** (`scaningDistance`)  
+       Defines the range within which actuators can detect tangible objects. Default is 10 units.
+       
+     - **Power Factor:** (`powerFactor`)  
+       Adjusts the intensity of actuator responses based on proximity. Higher values increase sensitivity to closer objects. Default is 2.0.
+       
+     - **Minimum Actuator Value Threshold:** (`acuatorMinValueThreshold`)  
+       The minimum value an actuator can output. Values below this threshold are considered inactive. Default is 0.14.
+       
+     - **Maximum Actuator Value:** (`maxActuatorValue`)  
+       The maximum intensity an actuator can reach. Default is 1.0.
+       
+     - **Distance Base Weights:** (`distanceBaseWeights`)  
+       Defines how the distance of tangible objects affects actuator response. For example, the first value corresponds to the closest object, the second to the next, and so on. Default weights are [1.0, 0.5, 0.25].
+       
+     - **Show Actuator Values:** (`ShowActuatorValues`)  
+       Enables or disables the display of actuator values in the scene. Default is enabled.
+       
+     - **Gradient:** (`gradient`)  
+       Defines the color gradient used for visual feedback based on actuator values.
 
    - **Actuator Data Sender:**  
      Required for the Actuators Manager to send calculated data to the Device Manager.
@@ -58,4 +80,3 @@ Below is an example image showing a typical setup:
 
 - Ensure all GameObjects with actuators have the necessary components as listed above.
 - Use the sample scene for reference if you encounter any issues.
-
