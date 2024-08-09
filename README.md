@@ -3,7 +3,7 @@ Documentation and Projects for haptic feedback systems. Explore and contribute t
 
 
 # Project General View
-- **[Hardware](./tree/main/hardware/)**
+- **[Hardware](./hardware/)**
   - **[Electronic_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/electronic_components/)**
   - **[Physical_components](https://github.com/alinajm7/Haptisense/tree/main/hardware/physical_components/)**
 - **[Software](https://github.com/alinajm7/Haptisense/tree/main/software/)**
