@@ -1,0 +1,91 @@
+The application reads a Json file from here. 
+File name should be: Questions.json
+And the list of Questionnaire class name is “ListOfQuestions”
+The first Item should be ID, a unique int or string  because it play as a KeyParameter.
+
+Sample of  json format for Questions:
+{
+    "ListOfQuestions": [
+        {
+            "questionCategory": "ID",
+            "questionLabel;": "ID",
+            "questionText": "Participant ID",
+            "mandatory": true
+        },
+        {
+            "questionCategory": "Condition",
+            "questionLabel;": "Experiment Location",
+            "questionText": "Location",
+            "mandatory": true
+        },
+        {
+            "questionCategory": "Pre-experiment Questionnaire",
+            "questionLabel;": "Q1",
+            "questionText": "How do you feel Today?",
+            "optionalAnswers": [ "Excellent", "Good", "Average", "Poor" ],
+            "mandatory": false,
+            "acceptMultipleChoice": false,
+            "showinDropDown": true,
+        }
+    ]
+}
+
+The Questionnaire class has following properties:
+public class Questionnaire
+{
+    //Question
+    public int questionIndex;
+    public string questionCategory;
+    public string questionLabel;
+    public string questionText;
+    public List<string> optionalAnswers;
+    public bool mandatory;
+    public bool acceptMultipleChoice;
+    public bool showinDropDown;
+    public bool automatedDataCollection;
+
+    //Answers
+    public List<string> SelectedAnswers;
+    public List<int> SelectedAnswersIndex;
+    public string AnswerInText;
+} 
+
+So the complete version that can be used in json file is :
+{
+            "questionCategory": "Demographic",
+            "questionIndex": 2,
+            "questionText": "Participant ID",
+            "optionalAnswers": [ "Excellent", "Good", "Average", "Poor" ],
+            "mandatory": false,
+            "acceptMultipleChoice": false,
+            "showinDropDown": true,
+    	    " automatedDataCollection ": false,
+
+
+
+            "SelectedAnswers": [ "Average", "Poor" ],
+            "SelectedAnswersIndex": [ 3, 4 ],
+            "AnswerInText": "answer"
+        }
+
+BUT:
+questionIndex do not need to be defined as it will be defined automatically by application. (The starting number for question index is 1 (not 0), the same for AnswersIndex for multiple choices. This adjustment happen for more readability of indexes in questionnaire as 0 doesn’t make sense)
+Note: if optionalAnswers is empty the answer will be in Text format.
+SelectedAnswers, SelectedAnswersIndex, AnswerInText are answers and shouldn’t be defined by Json file and later user will complete them. 
+
+automatedDataCollection is indicating if this question is self-report answer or objective data collected by a device. Also This Item will be ignored to be created When QuestionUIGenerator called. 
+
+questionLabel is the data labels in the Datalog file
+
+So the necessary  format that need to be added in the json file for each field is : 
+{
+"questionCategory": "Demographic",
+"questionText": "Participant ID",
+"optionalAnswers": [ "Excellent", "Good", "Average", "Poor" ],
+"mandatory": false,
+"acceptMultipleChoice": false,
+"showinDropDown": true,
+}
+
+
+
