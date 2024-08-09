@@ -2769,8 +2769,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5933288633654624159}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.56927955, z: 0, w: 0.8221441}
-  m_LocalPosition: {x: -5.2, y: 15.8, z: 138.9}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2833,7 +2833,7 @@ Transform:
   - {fileID: 6077731956600697694}
   - {fileID: 3685641737439254548}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 69.4, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &3869153582441728960
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2853,8 +2853,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 35, y: 30, z: 30}
-  m_Center: {x: 10.077736, y: -7.22, z: 7.1117125}
+  m_Size: {x: 30, y: 20, z: 25}
+  m_Center: {x: 10, y: 0, z: 7.5}
 --- !u!54 &7576537844065392654
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2943,291 +2943,407 @@ MonoBehaviour:
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (1)
     actuatorObject: {fileID: 6751079051008172398}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (2)
     actuatorObject: {fileID: 2818810116297126774}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (3)
     actuatorObject: {fileID: 4951364661032102151}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (4)
     actuatorObject: {fileID: 3750563862542302685}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (5)
     actuatorObject: {fileID: 3527555630487422028}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (6)
     actuatorObject: {fileID: 7294862050471227258}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (7)
     actuatorObject: {fileID: 1450494339240069614}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (8)
     actuatorObject: {fileID: 4986836041666831486}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (9)
     actuatorObject: {fileID: 4672530628792372381}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (10)
     actuatorObject: {fileID: 8602067059122706234}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (11)
     actuatorObject: {fileID: 4727469609911086833}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (12)
     actuatorObject: {fileID: 6816296641390633754}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (13)
     actuatorObject: {fileID: 3579946925834699981}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (14)
     actuatorObject: {fileID: 8178011229594819595}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (15)
     actuatorObject: {fileID: 9078464469697364428}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (16)
     actuatorObject: {fileID: 8206128145148375339}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (17)
     actuatorObject: {fileID: 4931271023917292629}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (18)
     actuatorObject: {fileID: 4811610602971815834}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (19)
     actuatorObject: {fileID: 1832061595300916634}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (20)
     actuatorObject: {fileID: 8720106730321844063}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (21)
     actuatorObject: {fileID: 7956393407961218666}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (22)
     actuatorObject: {fileID: 2745386702961686266}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (23)
     actuatorObject: {fileID: 4047338809636643946}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (24)
     actuatorObject: {fileID: 689546667354210948}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (25)
     actuatorObject: {fileID: 6803764916258982862}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (26)
     actuatorObject: {fileID: 5721632538066333814}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (27)
     actuatorObject: {fileID: 7703363119329639662}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (28)
     actuatorObject: {fileID: 5113156820825696348}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (29)
     actuatorObject: {fileID: 8201546306722296034}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (30)
     actuatorObject: {fileID: 3467228479597967378}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (31)
     actuatorObject: {fileID: 7675443260234479616}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (32)
     actuatorObject: {fileID: 8032417242753685755}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (33)
     actuatorObject: {fileID: 6703019633914098290}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (34)
     actuatorObject: {fileID: 318365408162629715}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (35)
     actuatorObject: {fileID: 1815432798215685437}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (36)
     actuatorObject: {fileID: 3739081090882175903}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (37)
     actuatorObject: {fileID: 5874947792741142157}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (38)
     actuatorObject: {fileID: 7578639716542984295}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (39)
     actuatorObject: {fileID: 2582664729163953629}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (40)
     actuatorObject: {fileID: 6792042940329139951}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (41)
     actuatorObject: {fileID: 7667660267756276825}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (42)
     actuatorObject: {fileID: 8590463585603022344}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (43)
     actuatorObject: {fileID: 8172131869579153203}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (44)
     actuatorObject: {fileID: 9011780276609111347}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (45)
     actuatorObject: {fileID: 5767205702713607992}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (46)
     actuatorObject: {fileID: 1945431495689930444}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (47)
     actuatorObject: {fileID: 7016280643468296117}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (48)
     actuatorObject: {fileID: 8949985113512242465}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (49)
     actuatorObject: {fileID: 2128040890895285145}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (50)
     actuatorObject: {fileID: 7402399506457227870}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (51)
     actuatorObject: {fileID: 1312344703328663777}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (52)
     actuatorObject: {fileID: 940488074608706617}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (53)
     actuatorObject: {fileID: 5341652580362626551}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (54)
     actuatorObject: {fileID: 3235638809311196792}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (55)
     actuatorObject: {fileID: 8644071541217035661}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (56)
     actuatorObject: {fileID: 1940104182151509536}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (57)
     actuatorObject: {fileID: 1834398728457679420}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   tangibleObjects:
   - {fileID: 0}
   - {fileID: 0}
@@ -3248,6 +3364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actuatorsManager: {fileID: 6677869529699622442}
   communicationManager: {fileID: 0}
+  sendDataSafetyMargin: 80
 --- !u!114 &6443874733096709924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3266,291 +3383,407 @@ MonoBehaviour:
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (1)
     actuatorObject: {fileID: 6751079051008172398}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (2)
     actuatorObject: {fileID: 2818810116297126774}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (3)
     actuatorObject: {fileID: 4951364661032102151}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (4)
     actuatorObject: {fileID: 3750563862542302685}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (5)
     actuatorObject: {fileID: 3527555630487422028}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (6)
     actuatorObject: {fileID: 7294862050471227258}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (7)
     actuatorObject: {fileID: 1450494339240069614}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (8)
     actuatorObject: {fileID: 4986836041666831486}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (9)
     actuatorObject: {fileID: 4672530628792372381}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (10)
     actuatorObject: {fileID: 8602067059122706234}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (11)
     actuatorObject: {fileID: 4727469609911086833}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (12)
     actuatorObject: {fileID: 6816296641390633754}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (13)
     actuatorObject: {fileID: 3579946925834699981}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (14)
     actuatorObject: {fileID: 8178011229594819595}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (15)
     actuatorObject: {fileID: 9078464469697364428}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (16)
     actuatorObject: {fileID: 8206128145148375339}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (17)
     actuatorObject: {fileID: 4931271023917292629}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (18)
     actuatorObject: {fileID: 4811610602971815834}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (19)
     actuatorObject: {fileID: 1832061595300916634}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (20)
     actuatorObject: {fileID: 8720106730321844063}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (21)
     actuatorObject: {fileID: 7956393407961218666}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (22)
     actuatorObject: {fileID: 2745386702961686266}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (23)
     actuatorObject: {fileID: 4047338809636643946}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (24)
     actuatorObject: {fileID: 689546667354210948}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (25)
     actuatorObject: {fileID: 6803764916258982862}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (26)
     actuatorObject: {fileID: 5721632538066333814}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (27)
     actuatorObject: {fileID: 7703363119329639662}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (28)
     actuatorObject: {fileID: 5113156820825696348}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (29)
     actuatorObject: {fileID: 8201546306722296034}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (30)
     actuatorObject: {fileID: 3467228479597967378}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (31)
     actuatorObject: {fileID: 7675443260234479616}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (32)
     actuatorObject: {fileID: 8032417242753685755}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (33)
     actuatorObject: {fileID: 6703019633914098290}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (34)
     actuatorObject: {fileID: 318365408162629715}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (35)
     actuatorObject: {fileID: 1815432798215685437}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (36)
     actuatorObject: {fileID: 3739081090882175903}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (37)
     actuatorObject: {fileID: 5874947792741142157}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (38)
     actuatorObject: {fileID: 7578639716542984295}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (39)
     actuatorObject: {fileID: 2582664729163953629}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (40)
     actuatorObject: {fileID: 6792042940329139951}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (41)
     actuatorObject: {fileID: 7667660267756276825}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (42)
     actuatorObject: {fileID: 8590463585603022344}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (43)
     actuatorObject: {fileID: 8172131869579153203}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (44)
     actuatorObject: {fileID: 9011780276609111347}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (45)
     actuatorObject: {fileID: 5767205702713607992}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (46)
     actuatorObject: {fileID: 1945431495689930444}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (47)
     actuatorObject: {fileID: 7016280643468296117}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (48)
     actuatorObject: {fileID: 8949985113512242465}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (49)
     actuatorObject: {fileID: 2128040890895285145}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (50)
     actuatorObject: {fileID: 7402399506457227870}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (51)
     actuatorObject: {fileID: 1312344703328663777}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (52)
     actuatorObject: {fileID: 940488074608706617}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (53)
     actuatorObject: {fileID: 5341652580362626551}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (54)
     actuatorObject: {fileID: 3235638809311196792}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (55)
     actuatorObject: {fileID: 8644071541217035661}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (56)
     actuatorObject: {fileID: 1940104182151509536}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   - name: Actuator (57)
     actuatorObject: {fileID: 1834398728457679420}
     actuatorValue: 0
     lowStateDuration: 99999
     highStateDuration: 0
+    lastLowStateDuration: 99999
+    lastHighStateDuration: 0
   startPosition: {x: 0, y: 0, z: 1.25}
   offsetOnSecondLine: {x: 0, y: 0, z: -1.25}
   inlineObjectsInterval: 2.5
@@ -3579,7 +3812,6 @@ MonoBehaviour:
   referenceObjectCol: 3
   debugLineColor: {r: 0, g: 1, b: 0, a: 1}
   debugLineDuration: 15
-  actuatorGridInitialized: 1
 --- !u!1 &6703019633914098290
 GameObject:
   m_ObjectHideFlags: 0

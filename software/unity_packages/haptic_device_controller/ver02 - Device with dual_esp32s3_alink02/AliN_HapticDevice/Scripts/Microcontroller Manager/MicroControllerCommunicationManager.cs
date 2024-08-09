@@ -179,7 +179,7 @@ namespace AliN.Microcontroller
             sb.Append("#");
             sb.Append('\n');
             string dataString = sb.ToString();
-            Debug.Log(dataString);
+            //Debug.Log(dataString);
             return dataString;
         }
 

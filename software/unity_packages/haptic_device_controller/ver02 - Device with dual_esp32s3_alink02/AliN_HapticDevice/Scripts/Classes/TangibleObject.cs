@@ -6,6 +6,7 @@ namespace AliN.Microcontroller.Classes
     
     public class TangibleObject: MonoBehaviour
     {
+        [Header("--------------Change intencity by distance----------------")]
         [SerializeField]
         [Tooltip("The value can be 5k to 500k")]
         [Header("*(5 Hz to 500kHz)*")]
@@ -17,6 +18,7 @@ namespace AliN.Microcontroller.Classes
             set { _initialFrequencyInHz = Mathf.Clamp(value, 5, 500000); }
         }
 
+        [Header("--------------Change frequency by distance----------------")]
         [SerializeField]
         private bool _useDynamicFrequency = false;
         public bool useDynamicFrequency
@@ -44,5 +46,12 @@ namespace AliN.Microcontroller.Classes
             get { return _proximityFreq; }
             set { _proximityFreq = Mathf.Clamp(value, 5, 500000); }
         }
+        [Header("--------------*** Specified thresholds ***----------------")]
+        public bool useLocalMinThreshold = false;
+        [Range(0, 1f)]
+        public float tangibleMinValueThreshold = 0.14f;
+        public bool useLocalMaxValue = false;
+        [Range(0, 1f)]
+        public float tangibleMaxValue = 1.0f;
     }
 }

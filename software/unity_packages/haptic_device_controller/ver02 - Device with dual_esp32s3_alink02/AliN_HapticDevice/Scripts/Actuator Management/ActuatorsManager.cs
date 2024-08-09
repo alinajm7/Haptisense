@@ -22,7 +22,7 @@ namespace AliN.Microcontroller
         [Header("Behaviour Setting")]
         public float scaningDistance = 10f;
         public float powerFactor = 2.0f;
-        [Range(0, 1)]
+        [Range(0, 1f)]
         public float acuatorMinValueThreshold = 0.14f;
         [Range(0, 1f)]
         public float maxActuatorValue = 1.0f;
@@ -132,9 +132,18 @@ namespace AliN.Microcontroller
                     {
                         if (distances[i] <= scaningDistance)
                         {
+                            float minvalue = acuatorMinValueThreshold;
+                            float maxValue = maxActuatorValue;
+
+                            if (tangibleObjectsTempIn[i].useLocalMaxValue) maxValue = tangibleObjectsTempIn[i].tangibleMaxValue;
+                            if (tangibleObjectsTempIn[i].useLocalMinThreshold) minvalue = tangibleObjectsTempIn[i].tangibleMinValueThreshold;
+
+
                             float tmp = Mathf.Pow(Mathf.Clamp01(1 - (distances[i] / scaningDistance)), powerFactor);
-                            tmp = tmp > maxActuatorValue ? maxActuatorValue : tmp;
-                            tmp = tmp < acuatorMinValueThreshold ? 0f : tmp;
+                            
+                           
+                            tmp = tmp > maxValue ? maxValue : tmp;
+                            tmp = tmp < minvalue ? 0f : tmp;
 
                             filteredValue[filteredIndex] = tmp;
                             filteredPoints[filteredIndex] = points[indices[i]];
@@ -198,7 +207,7 @@ namespace AliN.Microcontroller
             {
                 actuator.lastHighStateDuration = actuator.highStateDuration;
                 actuator.lastLowStateDuration = actuator.lowStateDuration;
-                Actuator.actuatorValueChanged = true;
+                Actuator.actuatorValueChanged = true;  // if value changed gives indication to send data to  Microcontroller
             }
            
             // Display Visual representations
