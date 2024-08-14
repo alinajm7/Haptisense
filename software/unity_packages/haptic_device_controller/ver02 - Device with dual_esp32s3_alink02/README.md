@@ -31,6 +31,7 @@ Note about `MicroControllerCommunicationManager`:
   
 Note about `ActuatorDataSender`: 
      Required for collecting actuators array info from all the available actuatorsManagers in the scene and combine them together and send it to the DeviceControllManager.
+     Also, this class is responsible to send data only if there is any changes in the actuators value.
 
 ### 2. Setting Up the Actuator Manager
 
