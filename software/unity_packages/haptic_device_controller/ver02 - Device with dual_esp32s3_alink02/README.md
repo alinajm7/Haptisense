@@ -18,14 +18,19 @@ To manually set up the haptic device in your Unity project, follow these steps:
 
 1. **Create an Empty GameObject:**  
    - In your scene, create an empty GameObject.
-   - Add the `MicroControllerCommunicationManager` component to this GameObject.  
+   - Add the `MicroControllerCommunicationManager` & `ActuatorDataSender` components to this GameObject.
+
+Note about `MicroControllerCommunicationManager`:
    This component manages communication with the haptic device. The microcontroller expects a string that starts with `@` and ends with `#`. Use the following commands:
    - `@B#` to turn on the reading inputs process.
    - `@F#` to turn off the reading inputs process.
 
-   This device has 58 actuators. The input should be an array of 580 numeric digits (58 sets of 10), where the first 5 digits indicate the low duration, and the second 5 digits indicate the high duration. Including the starting, ending characters, and a null terminator, the total transmission length is 582 characters.
+   This device has 58 actuators. The input should be an array of 580 numeric digits (58 sets of 10), where the first 5 digits indicate the low duration, and the second 5 digits indicate the high duration. Including the starting, ending characters, and a null terminator, the total transmission length is 583 characters.
 
-  **Note:** If either the low duration or high duration is set to `0`, the microcontroller will consider it an error and safely turn off the actuator. To function correctly, you can send values close to zero but not exactly zero.
+  **Note:** If either the low duration or high duration is set to `0`, the microcontroller will consider it an error and keeps actuators turned off. To function correctly, low duration value can be any values but zero.
+  
+Note about `ActuatorDataSender`: 
+     Required for collecting actuators array info from all the available actuatorsManagers in the scene and combine them together and send it to the DeviceControllManager.
 
 ### 2. Setting Up the Actuator Manager
 
@@ -35,45 +40,44 @@ To manually set up the haptic device in your Unity project, follow these steps:
 
 2. **Add the Following Components:**
 
-   - **Collider (with "Is Trigger" checked):**  
+   - **`Collider` (with "Is Trigger" checked):**  
      Defines the scanning area for the actuators.
 
-   - **Rigidbody:**  
+   - **`Rigidbody`:**  
      Enables object detection functions.
 
-   - **Actuators Manager:**  
+   - **`Actuators Manager`:**  
      Manages the behavior of actuators, including properties like scanning distance, power factor, and distance-based weighting.  
      
      **Properties:**
-     - **Scanning Distance:** (`scaningDistance`)  
-       Defines the range within which actuators can detect tangible objects. Default is 10 units.
+     - **Scanning Distance:** 
+       Defines the range within which actuators can detect tangible objects.
        
-     - **Power Factor:** (`powerFactor`)  
-       Adjusts the intensity of actuator responses based on proximity. Higher values increase sensitivity to closer objects. Default is 2.0.
+     - **Power Factor:** 
+       Adjusts the intensity of actuator responses based on proximity. Higher values increase sensitivity to closer objects.
        
-     - **Minimum Actuator Value Threshold:** (`acuatorMinValueThreshold`)  
-       The minimum value an actuator can output. Values below this threshold are considered inactive. Default is 0.14.
+     - **Minimum Actuator Value Threshold:**  
+       The minimum value an actuator can output. Values below this threshold are considered inactive.
        
-     - **Maximum Actuator Value:** (`maxActuatorValue`)  
-       The maximum intensity an actuator can reach. Default is 1.0.
+     - **Maximum Actuator Value:**  
+       The maximum intensity an actuator can reach.
        
-     - **Distance Base Weights:** (`distanceBaseWeights`)  
-       Defines how the distance of tangible objects affects actuator response. For example, the first value corresponds to the closest object, the second to the next, and so on. Default weights are [1.0, 0.5, 0.25].
+     - **Distance Base Weights:**
+       Defines how the distance of multiple tangible objects affects actuator response by weight factors. The first value corresponds to the affecting weight of the closest object, the second value to the affecting weight of the next closest tangible object, and so on.
        
-     - **Show Actuator Values:** (`ShowActuatorValues`)  
+     - **Show Actuator Values:** 
        Enables or disables the display of actuator values in the scene. Default is enabled.
        
-     - **Gradient:** (`gradient`)  
+     - **Gradient:**  
        Defines the color gradient used for visual feedback based on actuator values.
 
-   - **Actuator Data Sender:**  
-     Required for the Actuators Manager to send calculated data to the Device Manager.
+
 
    - **Optional Components:**
-     - **Actuator Layout:**  
+     - **`Actuator Layout`:**  
        Automatically creates a pattern of actuators based on specified parameters.
        
-     - **Actuator Mapper on Surface:**  
+     - **`Actuator Mapper on Surface`:**  
        Maps all actuator cells onto any 3D object surface with a Collider (or Mesh Collider) using three different mapping methods.
 
 ### 3. Example Setup
