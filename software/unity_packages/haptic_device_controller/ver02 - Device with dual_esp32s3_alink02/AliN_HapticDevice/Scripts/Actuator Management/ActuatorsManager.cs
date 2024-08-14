@@ -5,7 +5,7 @@ using System;
 
 namespace AliN.Microcontroller
 {
-    [RequireComponent(typeof(ActuatorDataSender))]
+    //[RequireComponent(typeof(ActuatorDataSender))]
     public class ActuatorsManager : MonoBehaviour
     {
         [Header("General Setting")]
@@ -60,18 +60,10 @@ namespace AliN.Microcontroller
             foreach (var actuator in arrayOfActuators)
             {
                 // Reset actuator to its initial state
-                ResetActuator(actuator);
+                actuator.ResetActuatorProperties();
                 // Update actuator properties based on scene objects
                 UpdateActuatorState(actuator);
             }
-        }
-
-        // Reset the given actuator to its initial state
-        private void ResetActuator(Actuator actuator)
-        {
-            actuator.actuatorValue = 0;            
-            actuator.highStateDuration = 0; // Ensure the high duration is reset
-            actuator.material.color = actuator.originalColor;
         }
 
         private void UpdateActuatorState(Actuator actuator)
@@ -170,45 +162,52 @@ namespace AliN.Microcontroller
             {
 
                 totalActuatorValueTmp += distanceBaseWeights[i] * filteredValue[i];
-                
 
+                int currentLowStateDuration, currentHighStateDuration;
 
                 if (filteredTangibleObjects[i].useDynamicFrequency)
                 {
                     float weight = distanceBaseWeights[i];
                     
 
-                    int totalDurationFar = Mathf.RoundToInt(1000000f / filteredTangibleObjects[i].scanningDistanceFreq);
-                    int totalDurationClose = Mathf.RoundToInt(1000000f / filteredTangibleObjects[i].proximityFreq);
+                    int totalDurationFar = Mathf.RoundToInt(1000000f / filteredTangibleObjects[i].distanceScanningFrequency);
+                    int totalDurationClose = Mathf.RoundToInt(1000000f / filteredTangibleObjects[i].proximityDetectionFrequency);
 
                     // Calculate the step duration based on the weight and the influence of both frequencies
                     int stepDuration = totalDurationFar + Mathf.RoundToInt(weight * filteredValue[i] * (totalDurationClose - totalDurationFar));
 
-                    totalLowStateDurationTmp += stepDuration;
-                    totalHighStateDurationTmp += stepDuration;
+                    currentLowStateDuration= stepDuration;
+                    currentHighStateDuration= stepDuration;
                 }
                 else
                 {
                     int totalDuration = Mathf.RoundToInt(1000000f / (filteredTangibleObjects[i].initialFrequencyInHz));
                     //  Here I keep the total duration of the cycle fixed and changing the proportion of low and high dtate duration.
-                    totalLowStateDurationTmp += (totalDuration - (distanceBaseWeights[i] * filteredValue[i] * totalDuration));
-                    totalHighStateDurationTmp += (distanceBaseWeights[i] * filteredValue[i] * totalDuration);
+                    currentLowStateDuration = (int)(totalDuration - (distanceBaseWeights[i] * filteredValue[i] * totalDuration));
+                    currentHighStateDuration = (int)(distanceBaseWeights[i] * filteredValue[i] * totalDuration);
                 }
-                
+
+                if (filteredTangibleObjects[i].useFixedLowTimeFrequency) { currentLowStateDuration = filteredTangibleObjects[i].fixedLowTimeFrequency; }
+
+                if (filteredTangibleObjects[i].useFixedHighTimeFrequency) { currentHighStateDuration = filteredTangibleObjects[i].fixedHighTimeFrequency; }
+
+                totalLowStateDurationTmp += currentLowStateDuration;
+                totalHighStateDurationTmp += currentHighStateDuration;
+
             }
 
-
+           
             actuator.actuatorValue = Mathf.Clamp01 (totalActuatorValueTmp);
             actuator.lowStateDuration = (int)(Mathf.Clamp(totalLowStateDurationTmp, 1,99999)); // lowStateDuration is Clamp to 1 because if it is 0 microcontroller turnoff the actuator
             /*  To prevent the microcontroller from turning off the actuator when the low duration is zero, the `lowStateDuration` is clamped to a minimum value of `1`. This ensures that the actuator remains active even with very short durations, while values close to zero but not exactly zero are sent for correct functioning. The `highStateDuration` is clamped between `0` and `99999` to accommodate varying actuation needs.  */
             actuator.highStateDuration = (int)(Mathf.Clamp(totalHighStateDurationTmp, 0, 99999));
 
-            if (actuator.highStateDuration != actuator.lastHighStateDuration || actuator.lowStateDuration != actuator.lastLowStateDuration)
-            {
-                actuator.lastHighStateDuration = actuator.highStateDuration;
-                actuator.lastLowStateDuration = actuator.lowStateDuration;
-                Actuator.actuatorValueChanged = true;  // if value changed gives indication to send data to  Microcontroller
-            }
+            //if (actuator.highStateDuration != actuator.lastHighStateDuration || actuator.lowStateDuration != actuator.lastLowStateDuration)
+            //{
+            //    actuator.lastHighStateDuration = actuator.highStateDuration;
+            //    actuator.lastLowStateDuration = actuator.lowStateDuration;
+            //    Actuator.actuatorValueChanged = true;  // if value changed gives indication to send data to  Microcontroller
+            //}
            
             // Display Visual representations
             VisualPresentationUpdate(actuator, filteredValue, filteredPoints);

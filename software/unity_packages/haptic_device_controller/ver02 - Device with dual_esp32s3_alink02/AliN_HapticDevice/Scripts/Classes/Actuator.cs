@@ -16,13 +16,18 @@ namespace AliN.Microcontroller.Classes
        // public Vector3 targetObjectPoint; 
        // public Vector2Int matrixPosition;  // Position of actuators in Martix patterns for layout
        // public int frequencyInHz = 50000; // (5,000 to 500,000) According to the microcontroller and communication protocol design from 1 to 200000 microsec. so frquency can be from 500 kHz to 5 kHz
-        public int lowStateDuration=99999;
+        public int lowStateDuration=0;  // Max is 99999
         public int highStateDuration = 0;
 
-        public int lastLowStateDuration = 99999;
-        public int lastHighStateDuration = 0;
+        //public int lastLowStateDuration = 99999;
+        //public int lastHighStateDuration = 0;
 
-        public static bool actuatorValueChanged = false;
+        //public static bool actuatorValueChanged = false;
+
+        public Actuator()
+        {
+
+        }
 
         public Actuator(GameObject actuatorGameObject)
         {
@@ -36,14 +41,19 @@ namespace AliN.Microcontroller.Classes
                 renderer.sharedMaterial = new Material(Shader.Find("Standard"));
             }
 
-            this.material = renderer.sharedMaterial; // Now this should be safe
+            this.material = renderer.sharedMaterial; 
             originalColor = this.material.color;
 
         }
-        public Actuator()
+
+
+
+        public void ResetActuatorProperties()
         {
-            this.actuatorValue = 0;
-            // Initialize other fields if they exist
+            this.actuatorValue = 0;          
+            this.lowStateDuration = 0;
+            this.highStateDuration = 0;
+            this.material.color = originalColor;
         }
     }
 

@@ -21,6 +21,7 @@ namespace AliN.Microcontroller
     // Communication manager for managing microcontroller interactions
     public class MicrocontrollerCommunicationManager : Singleton<MicrocontrollerCommunicationManager>
     {
+        
         private readonly object _lock = new object(); // For thread safety
         private ICommunicationHandler _communicationHandler;
 
@@ -54,6 +55,8 @@ namespace AliN.Microcontroller
         [Header("---------- Sending Data Setting ----------")]
         [SerializeField]
         private int sendingDataInterval = 20;
+        
+        private int numberOfActuators = 58;
 
 
         [Header("---------- Re-connect Button ---------- ")]
@@ -67,8 +70,7 @@ namespace AliN.Microcontroller
 
         // Initialization
         void Start()
-        {
-            
+        {            
             InitializeCommunicationHandler();
             StartCoroutine(SendDataToMicroControllerWithDelay("@B#"));
         }
@@ -164,12 +166,12 @@ namespace AliN.Microcontroller
 
         private string StructureDataForSending(Actuator[] actuatorArray)
         {
-            StringBuilder sb = new StringBuilder(3 + (58*5)); // Pre-allocate enough space for 58 actuators * 5 characters each
+            StringBuilder sb = new StringBuilder(3 + (numberOfActuators * 5)); // Pre-allocate enough space for 58 actuators * 5 characters each
 
             // Add control characters
             sb.Append("@");
 
-            for (int i = 0; i < 58; i++)
+            for (int i = 0; i < numberOfActuators; i++)
             {             
                     int firstValue = actuatorArray[i].lowStateDuration;
                     int SecondValue = actuatorArray[i].highStateDuration;
@@ -179,7 +181,7 @@ namespace AliN.Microcontroller
             sb.Append("#");
             sb.Append('\n');
             string dataString = sb.ToString();
-            //Debug.Log(dataString);
+            Debug.Log(dataString);
             return dataString;
         }
 
@@ -187,8 +189,8 @@ namespace AliN.Microcontroller
         {
             // create a new array of Actuators and set all the actuator.values to zero and send to the micro controller
             Debug.Log("ResetAllActuators  Called");
-                Actuator[] zeroedActuators = new Actuator[58];
-                for (int i = 0; i < 58; i++)
+                Actuator[] zeroedActuators = new Actuator[numberOfActuators];
+                for (int i = 0; i < numberOfActuators; i++)
                 {
                 zeroedActuators[i] = new Actuator(); //zeroedActuators[i].actuatorValue = 0 in Actuator class
                 }

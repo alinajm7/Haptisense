@@ -1,18 +1,14 @@
 using AliN.Microcontroller.Classes;
+using System.Collections.Generic;
 using UnityEngine;
-
 
 namespace AliN.Microcontroller
 {
-    [RequireComponent(typeof(ActuatorsManager))]
-    // The ActuatorDataSender class is responsible for coordinating the sending of actuator data to the microcontroller.
+    //[RequireComponent(typeof(ActuatorsManager))]
     public class ActuatorDataSender : MonoBehaviour
     {
-        // Reference to the ActuatorsManager to fetch the current actuator settings.
         [SerializeField]
-        private ActuatorsManager actuatorsManager;
-
-        // Reference to the MicrocontrollerCommunicationManager to handle the communication protocols.
+        private ActuatorsManager[] actuatorsManagers;
 
         [SerializeField]
         private MicrocontrollerCommunicationManager communicationManager;
@@ -21,27 +17,42 @@ namespace AliN.Microcontroller
         public int sendDataSafetyMargin = 120;
         private int sendDataSafetyCounter;
 
-        // Constructor for ActuatorDataSender class.
-        public ActuatorDataSender(ActuatorsManager actuatorsManager, MicrocontrollerCommunicationManager communicationManager)
-        {
-            AssignClassesAutomatically();
-        }
+        private int[] lastLowStateDurations;
+        private int[] lastHighStateDurations;
 
-        // Use Unity's Awake to initialize
+        // Maximum value for clamping
+        private const int MaxClampValue = 99999;
+
+        bool dataChanged = false;
+
         private void Awake()
         {
             AssignClassesAutomatically();
             sendDataSafetyCounter = sendDataSafetyMargin;
+
+            // Initialize arrays based on the number of actuators
+            if (actuatorsManagers.Length > 0 && actuatorsManagers[0].arrayOfActuators.Length > 0)
+            {
+                int arrayLength = actuatorsManagers[0].arrayOfActuators.Length;
+                lastLowStateDurations = new int[arrayLength];
+                lastHighStateDurations = new int[arrayLength];
+            }
+            else
+            {
+                Debug.LogError("No actuators found in ActuatorsManager.");
+            }
         }
+
 
         void AssignClassesAutomatically()
         {
-            if (actuatorsManager == null)
+            if (actuatorsManagers == null || actuatorsManagers.Length == 0)
             {
-                actuatorsManager = GetComponent<ActuatorsManager>();
-                if (actuatorsManager == null)
+                actuatorsManagers = FindObjectsOfType<ActuatorsManager>();
+
+                if (actuatorsManagers == null || actuatorsManagers.Length == 0)
                 {
-                    Debug.LogError("ActuatorsManager not found");
+                    Debug.LogError("No ActuatorsManager found in the scene.");
                 }
             }
 
@@ -55,28 +66,79 @@ namespace AliN.Microcontroller
             }
         }
 
-        // Update
+        // Method to combine all arrays from all ActuatorsManager components
+        private Actuator[] CombineAndClampAllActuatorArrays()
+        {
+            if (actuatorsManagers == null || actuatorsManagers.Length == 0)
+            {
+                Debug.LogError("No ActuatorsManager components found.");
+                return null;
+            }
+
+            int arrayLength = actuatorsManagers[0].arrayOfActuators.Length;
+            Actuator[] combinedArray = new Actuator[arrayLength];
+
+            // Initialize the combined array
+            for (int i = 0; i < arrayLength; i++)
+            {
+                combinedArray[i] = new Actuator();             
+            }
+
+            // Sum the lowStateDuration and highStateDuration from all ActuatorsManagers
+            for (int k = 0; k < actuatorsManagers.Length; k++)
+            {
+                for (int i = 0; i < arrayLength; i++)
+                {
+                    combinedArray[i].lowStateDuration += actuatorsManagers[k].arrayOfActuators[i].lowStateDuration;
+                    combinedArray[i].highStateDuration += actuatorsManagers[k].arrayOfActuators[i].highStateDuration;
+                }
+            }
+
+            // Clamp the values to the maximum allowed value
+            for (int i = 0; i < arrayLength; i++)
+            {
+                combinedArray[i].lowStateDuration = Mathf.Clamp(combinedArray[i].lowStateDuration, 0, MaxClampValue);
+                combinedArray[i].highStateDuration = Mathf.Clamp(combinedArray[i].highStateDuration, 0, MaxClampValue);
+            }
+
+            return combinedArray;
+        }
+
+        // Update method
         public void Update()
         {
-            if (Actuator.actuatorValueChanged)
+
+            Actuator[] combinedArray = CombineAndClampAllActuatorArrays();
+           
+
+            // Check if data has changed
+            for (int i = 0; i < combinedArray.Length; i++)
             {
-                // Fetch actuator data from actuatorsManager and send it to the microcontroller.
-                communicationManager.SendActuatorValueToMicrocontroller(actuatorsManager.arrayOfActuators);
+                // Check if the values have changed
+                if (combinedArray[i].highStateDuration != lastHighStateDurations[i] || combinedArray[i].lowStateDuration != lastLowStateDurations[i])
+                {
+                    // Update the last known values
+                    lastLowStateDurations[i] = combinedArray[i].lowStateDuration;
+                    lastHighStateDurations[i] = combinedArray[i].highStateDuration;
+                    dataChanged = true;
+                }
+            }
+
+            if (dataChanged)
+            {
+                communicationManager.SendActuatorValueToMicrocontroller(combinedArray);
 
                 if (sendDataSafetyCounter > 0)
                 {
                     sendDataSafetyCounter--;
-
                 }
                 else
                 {
-                    Actuator.actuatorValueChanged = false;
                     sendDataSafetyCounter = sendDataSafetyMargin;
+                    dataChanged = false;
                 }
-                
             }
-            
-        }  
-
+        }
     }
+
 }
