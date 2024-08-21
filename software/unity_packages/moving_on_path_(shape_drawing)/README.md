@@ -5,7 +5,7 @@ This guide explains how to simulate movement on a haptic device using the Bézie
 ## How to Use
 
 1. **Download the Bézier Path Creator Package:**  
-   Get the package from the Unity Asset Store: <a href="https://assetstore.unity.com/packages/tools/utilities/b-zier-path-creator-136082" target="_blank">Bézier Path Creator</a>.
+   Get the package from the Unity Asset Store: <a href="https://assetstore.unity.com/packages/tools/utilities/b-zier-path-creator-136082" target="blank">Bézier Path Creator</a>.
 
 
 3. **Download the AliN_PathCreator Custom Script Package:**  
