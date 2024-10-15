@@ -4,7 +4,7 @@ Copyright (c) 2024, Ali Najm,
 Department of Multimedia and Graphic Arts, 
 Cyprus University of Technology.
 
-============================================================================
+=======================================================================
 Disclaimer of Liability:
 
 The software, hardware design, and documentation provided in this 
@@ -30,7 +30,7 @@ No Responsibility for Modifications: The creators and contributors disclaim
 	software, or documentation, and for any damages resulting from 
 	those modifications.
 
-============================================================================
+=======================================================================
 Attribution 4.0 International
 =======================================================================
 
