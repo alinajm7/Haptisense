@@ -8,28 +8,13 @@ Cyprus University of Technology.
 
 Disclaimer of Liability:
 
-The software, hardware design, and documentation provided in this 
-project are distributed under the terms of the Creative Commons 
-Attribution-NonCommercial 4.0 International License, with the following
-additional disclaimer:
+The software, hardware design, and documentation provided in this project are distributed under the terms of the Creative Commons Attribution-NonCommercial 4.0 International License, with the following additional disclaimer:
 
-No Warranty: This project, including the software, hardware designs, and
-	documentation, is provided "as-is" without any warranty of any kind, 
-	either expressed or implied. The creators and contributors are not 
-	responsible for any issues arising from the use of this project, 
-	including, but not limited to, malfunctioning hardware, software 
-	bugs, or errors in documentation.
+No Warranty: This project, including the software, hardware designs, and documentation, is provided "as-is" without any warranty of any kind, either expressed or implied. The creators and contributors are not responsible for any issues arising from the use of this project, including, but not limited to, malfunctioning hardware, software bugs, or errors in documentation.
 
-Limitation of Liability: In no event shall the creators or contributors
-	be held liable for any damages, including but not limited to direct,
-	indirect, incidental, or consequential damages, or any loss of 
-	profits or data, arising out of the use or inability to use this 
-	project, even if advised of the possibility of such damages.
+Limitation of Liability: In no event shall the creators or contributors be held liable for any damages, including but not limited to direct, indirect, incidental, or consequential damages, or any loss of profits or data, arising out of the use or inability to use this project, even if advised of the possibility of such damages.
 
-No Responsibility for Modifications: The creators and contributors disclaim
-	all responsibility for any modifications made to the hardware, 
-	software, or documentation, and for any damages resulting from 
-	those modifications.
+No Responsibility for Modifications: The creators and contributors disclaim all responsibility for any modifications made to the hardware, software, or documentation, and for any damages resulting from those modifications.
 
 =======================================================================
 
