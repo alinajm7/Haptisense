@@ -6,7 +6,7 @@ Cyprus University of Technology.
 
 =======================================================================
 
-Disclaimer of Liability:
+Additional Disclaimer of Liability:
 
 The software, hardware design, and documentation provided in this project are distributed under the terms of the Creative Commons Attribution-NonCommercial 4.0 International License, with the following additional disclaimer:
 
