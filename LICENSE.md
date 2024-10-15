@@ -5,6 +5,7 @@ Department of Multimedia and Graphic Arts,
 Cyprus University of Technology.
 
 =======================================================================
+
 Disclaimer of Liability:
 
 The software, hardware design, and documentation provided in this 
@@ -31,6 +32,7 @@ No Responsibility for Modifications: The creators and contributors disclaim
 	those modifications.
 
 =======================================================================
+
 Attribution 4.0 International
 =======================================================================
 
