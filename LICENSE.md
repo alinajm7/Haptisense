@@ -2,7 +2,7 @@ This project is licensed under the Creative Commons Attribution-NonCommercial 4.
 
 Copyright (c) 2024, Ali Najm, 
 Department of Multimedia and Graphic Arts, 
-Cyprus University of Technology
+Cyprus University of Technology.
 
 ============================================================================
 Disclaimer of Liability:
