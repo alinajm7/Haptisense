@@ -1,41 +1,56 @@
 using UnityEngine;
 
-public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
-    private static T instance;
+    private static T _instance;
+    private static object _lock = new object();
+    private static bool _applicationIsQuitting = false;
 
     public static T Instance
     {
         get
         {
-            if (instance == null)
+            if (_applicationIsQuitting)
             {
-                instance = FindObjectOfType<T>();
-                if (instance == null)
-                {
-                    GameObject singleton = new GameObject(typeof(T).ToString());
-                    instance = singleton.AddComponent<T>();
-                }
-
-                if (Application.isPlaying)
-                {
-                    DontDestroyOnLoad(instance.gameObject);
-                }
+                Debug.LogWarning($"[Singleton] Instance of {typeof(T)} is already destroyed.");
+                return null;
             }
-            return instance;
+
+            lock (_lock)
+            {
+                if (_instance == null)
+                {
+                    _instance = FindObjectOfType<T>();
+                    if (_instance == null)
+                    {
+                        GameObject singletonObject = new GameObject(typeof(T).Name);
+                        _instance = singletonObject.AddComponent<T>();
+                        DontDestroyOnLoad(singletonObject);
+                    }
+                }
+                return _instance;
+            }
         }
     }
 
     protected virtual void Awake()
     {
-        if (instance == null)
+        if (_instance == null)
         {
-            instance = this as T;
+            _instance = this as T;
             DontDestroyOnLoad(gameObject);
         }
-        else if (instance != this)
+        else if (_instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Prevent duplicate instances
+        }
+    }
+
+    protected virtual void OnDestroy()
+    {
+        if (_instance == this)
+        {
+            _applicationIsQuitting = true;
         }
     }
 }
