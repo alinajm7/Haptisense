@@ -1,0 +1,396 @@
+#include <Arduino.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
+#include "esp_task_wdt.h"
+#include "soc/gpio_struct.h"
+#include <BLEDevice.h>
+#include <BLEUtils.h>
+#include <BLEServer.h>
+
+// General Setup
+constexpr int BaudRate = 250000;        // Baud rate of serial port
+constexpr int NumberOfPins = 29;        // Number of pins that is used
+constexpr int MAX_INPUT_LENGTH = 583;   // Maximum input length
+constexpr int DATA_CHUNK_LENGTH = 290;  // Length of each data chunk
+constexpr char START_CHAR = '@';
+constexpr char END_CHAR = '#';
+constexpr char START_CHAR_DataToSlave = 'A';
+constexpr char END_CHAR_DataToSlave = 'E';
+constexpr unsigned long MinDuration = 1;
+constexpr unsigned long MaxDuration = 99999;
+
+// BLE Setup
+#define SERVICE_UUID "4fafc201-1fb5-459e-8fcc-c5c9c331914b"
+#define CHARACTERISTIC_UUID "beb5483e-36e1-4688-b7f5-ea07361b26a8"
+
+constexpr int LED_PIN = 48;
+BLECharacteristic *pCharacteristic;
+
+bool pinState[NumberOfPins] = { false };
+static char inputBuffer[MAX_INPUT_LENGTH];
+static int bufferPosition = 0;
+
+void handleSerialInput(char* input);
+void handleBLEInput(const String &receivedValue);
+
+// Custom callback class for handling BLE write events
+class MyCallbacks : public BLECharacteristicCallbacks {
+    void onWrite(BLECharacteristic *pCharacteristic) {
+        std::string rxValue = std::string((char*)pCharacteristic->getValue().c_str());
+        String receivedValue = String(rxValue.c_str()); // Convert std::string to Arduino String
+
+        Serial.println("BLE write callback fired! Received: " + receivedValue);
+        handleBLEInput(receivedValue);
+    }
+};
+
+// Custom callback class for handling BLE connection and disconnection events
+class MyServerCallbacks : public BLEServerCallbacks {
+    void onConnect(BLEServer* pServer) {
+      Serial.println("Device connected");
+    }
+
+    void onDisconnect(BLEServer* pServer) {
+      Serial.println("Device disconnected, restarting advertising...");
+      delay(500);  // Small delay to ensure proper disconnection handling
+      pServer->startAdvertising();  // Restart advertising
+    }
+};
+
+void setup() {
+    // Initialize Serial and LED
+    Serial.begin(BaudRate);
+    pinMode(LED_PIN, OUTPUT);
+    digitalWrite(LED_PIN, LOW);
+
+    // BLE Initialization
+    BLEDevice::init("HaptiSense-BLE-01");
+    BLEServer *pServer = BLEDevice::createServer();
+    pServer->setCallbacks(new MyServerCallbacks());
+    BLEService *pService = pServer->createService(SERVICE_UUID);
+    pCharacteristic = pService->createCharacteristic(
+        CHARACTERISTIC_UUID,
+        BLECharacteristic::PROPERTY_READ | BLECharacteristic::PROPERTY_WRITE
+    );
+    pCharacteristic->setValue("Hello World says Neil");
+    pCharacteristic->setCallbacks(new MyCallbacks());
+    pService->start();
+    BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
+    pAdvertising->addServiceUUID(SERVICE_UUID);
+    pAdvertising->setScanResponse(true);
+    pAdvertising->setMinPreferred(0x06);
+    pAdvertising->setMinPreferred(0x12);
+    BLEDevice::startAdvertising();
+    Serial.println("BLE Characteristic defined! Now you can read it on your phone!");
+
+    // Existing setup code
+    InitializeAllPinsForMaster();
+    Initiate4BitComInMaster();
+    SetAllPinsLOW();
+    delay(500);
+}
+
+void loop() {
+    // Handle Serial Input
+    while (Serial.available() > 0) {
+        char inChar = Serial.read();
+        if (inChar == '\n' || bufferPosition >= MAX_INPUT_LENGTH - 1) {
+            inputBuffer[bufferPosition] = '\0';
+            handleSerialInput(inputBuffer);
+            bufferPosition = 0;
+            memset(inputBuffer, 0, MAX_INPUT_LENGTH);
+        } else if (inChar != '\r') {
+            inputBuffer[bufferPosition++] = inChar;
+        }
+    }
+}
+
+void handleSerialInput(char* input) {
+    int inputLength = strlen(input);
+    if (input[inputLength - 1] == '\n') {
+        input[--inputLength] = '\0';
+    }
+
+    if (input[0] == START_CHAR && input[inputLength - 1] == END_CHAR) {
+        input[inputLength - 1] = '\0';
+        char* coreInput = input + 1;
+        // Handle input data as per existing logic...
+        Serial.println("Handling Serial Input: " + String(coreInput));
+    } else {
+        Serial.println("Invalid input format. Expecting '@' start and '#' end.");
+    }
+}
+
+void handleBLEInput(const String &receivedValue) {
+    if (receivedValue.length() > 0) {
+        Serial.println("Handling BLE Input: " + receivedValue);
+        if (receivedValue == "@ON#") {
+            Serial.println("Turning ON the LED via BLE");
+            digitalWrite(LED_PIN, HIGH);
+        } else if (receivedValue == "@OFF#") {
+            Serial.println("Turning OFF the LED via BLE");
+            digitalWrite(LED_PIN, LOW);
+        } else {
+            Serial.println("Received data via BLE: " + receivedValue);
+            // Further handling if needed...
+        }
+    }
+}
+
+void InitializeAllPinsForMaster() {
+    for (int i = 0; i < NumberOfPins; i++) {
+        pinMode(pins[i], OUTPUT);
+    }
+}
+
+void SetAllPinsLOW() {
+    for (int i = 0; i < NumberOfPins; i++) {
+        GPIO.out_w1tc = (1 << pins[i]);
+    }
+}
+
+//
+
+void RunLogicsForPWM() {
+  unsigned long currentTime = micros();
+
+  // Loop for i < 16
+  for (int i = 0; i < 16; i++) {
+    pwmConfig& pinConfig = PWM_Config[i];  // Cache the reference
+
+    if (pinConfig.pinLockState || pinConfig.stateDuration == 0) {
+      if (pinState[i]) {
+        GPIO.out_w1tc = (1 << pins[i]);
+        pinState[i] = false;
+      }
+      continue;
+    }
+
+    unsigned long elapsedTime = currentTime - pinConfig.lastActionCycleTime;
+    if (currentTime < pinConfig.lastActionCycleTime) {
+      elapsedTime = ULONG_MAX - pinConfig.lastActionCycleTime + currentTime;
+    }
+
+    if (!pinState[i]) {
+      if (elapsedTime >= pinConfig.lowStateDuration) {
+        GPIO.out_w1ts = (1 << pins[i]);
+        pinState[i] = true;
+      }
+    } else {
+      if (elapsedTime >= pinConfig.stateDuration) {
+        GPIO.out_w1tc = (1 << pins[i]);
+        pinState[i] = false;
+        pinConfig.lastActionCycleTime = currentTime;
+      }
+    }
+  }
+
+  // Loop for i >= 16
+  for (int i = 16; i < NumberOfPins; i++) {
+    pwmConfig& pinConfig = PWM_Config[i];  // Cache the reference
+
+    if (pinConfig.pinLockState || pinConfig.stateDuration == 0) {
+      if (pinState[i]) {
+        GPIO.out1_w1tc.val = (1 << (pins[i] - 32));
+        pinState[i] = false;
+      }
+      continue;
+    }
+
+    unsigned long elapsedTime = currentTime - pinConfig.lastActionCycleTime;
+    if (currentTime < pinConfig.lastActionCycleTime) {
+      elapsedTime = ULONG_MAX - pinConfig.lastActionCycleTime + currentTime;
+    }
+
+    if (!pinState[i]) {
+      if (elapsedTime >= pinConfig.lowStateDuration) {
+        GPIO.out1_w1ts.val = (1 << (pins[i] - 32));
+        pinState[i] = true;
+      }
+    } else {
+      if (elapsedTime >= pinConfig.stateDuration) {
+        GPIO.out1_w1tc.val = (1 << (pins[i] - 32));
+        pinState[i] = false;
+        pinConfig.lastActionCycleTime = currentTime;
+      }
+    }
+  }
+}
+
+
+
+
+
+// Core 1 related Methods (reading from port happens here, LOOP)
+
+void handleSerialInput(char* input) {
+  int inputLength = strlen(input);
+  if (input[inputLength - 1] == '\n') {
+    input[--inputLength] = '\0';  // Adjust length and remove newline
+  }
+
+  if (input[0] == '@' && input[inputLength - 1] == '#') {
+    // Properly formatted input
+    input[inputLength - 1] = '\0';  // Remove the ending character '#'
+    char* coreInput = input + 1;    // Skip the starting character '@'
+
+    if (strcmp(coreInput, "B") == 0) {
+      sendCharsToSlave("ABE", 4);  // "B" is Command for Turning ON Process. "A" and "E" are Starting and Ending Char for Slave
+      MPSON = true;
+      Serial.println("Receiving Data is ON");
+    } else if (strcmp(coreInput, "F") == 0) {
+      sendCharsToSlave("AFE", 4);  // "F" is Command for Turning OFF Process. "A" and "E" are Starting and Ending Char for Slave
+      MPSON = false;
+      SetAllPinsLOW();
+      Serial.println("Receiving Data is OFF");
+    } else if (strlen(coreInput) == 2 * DATA_CHUNK_LENGTH) {  // Check core content length without '@' and '#'
+      char localData[DATA_CHUNK_LENGTH + 1];                  // Buffer for Local Data
+      char slaveData[DATA_CHUNK_LENGTH + 3];                  // Buffer for Slave Data with new begining and ending chars
+
+      strncpy(localData, coreInput, DATA_CHUNK_LENGTH);
+      localData[DATA_CHUNK_LENGTH] = '\0';  // Ensure null termination
+
+      // Prepare slaveData
+      slaveData[0] = START_CHAR_DataToSlave;
+      strncpy(slaveData + 1, coreInput + DATA_CHUNK_LENGTH, DATA_CHUNK_LENGTH);
+      slaveData[DATA_CHUNK_LENGTH + 1] = END_CHAR_DataToSlave;
+      slaveData[DATA_CHUNK_LENGTH + 2] = '\0';  // Ensure null termination
+
+      sendCharsToSlave(slaveData, DATA_CHUNK_LENGTH + 3);
+      processLocalData(localData);
+    } else {
+      Serial.print("Number of received data: ");
+      Serial.print(strlen(coreInput));
+      Serial.println(" : Invalid PWM data length for 58 Actuators. Each actuator need 5 digits to indicate Low-time and 5 digits to indicate High-time (580 numeric chars + @ & #).");
+    }
+  } else {
+    Serial.println("Invalid input format. Expecting '@' start and '#' end.");
+  }
+}
+
+void processLocalData(char* localInput) {
+  for (int i = 0; i < NumberOfPins; i++) {
+    int index = i * 10;
+    char lowDurationStr[6] = { 0 };
+    char highDurationStr[6] = { 0 };
+
+    strncpy(lowDurationStr, localInput + index, 5);
+    strncpy(highDurationStr, localInput + index + 5, 5);
+
+    unsigned long lowDuration = strtoul(lowDurationStr, NULL, 10);
+    unsigned long highDuration = strtoul(highDurationStr, NULL, 10);
+
+    if (lowDuration == 0 || highDuration == 0) {
+      PWM_Config[i].pinLockState = true;
+      // Handle invalid input by setting durations to zero and turning off the pin
+      PWM_Config[i].lowStateDuration = 0;
+      PWM_Config[i].stateDuration = 0;
+
+      PWM_Config[i].lastActionCycleTime = micros();  // Reset timing
+      PWM_Config[i].pinLockState = false;
+
+    } else if (lowDuration >= MinDuration && lowDuration <= MaxDuration && highDuration >= 0 && highDuration <= MaxDuration) {
+      PWM_Config[i].pinLockState = true;
+      PWM_Config[i].lowStateDuration = lowDuration;
+      PWM_Config[i].stateDuration = lowDuration + highDuration;
+
+      PWM_Config[i].pinLockState = false;
+    } else {
+      PWM_Config[i].pinLockState = true;
+      // Handle invalid input by setting durations to zero and turning off the pin
+      PWM_Config[i].lowStateDuration = 0;
+      PWM_Config[i].stateDuration = 0;
+
+      PWM_Config[i].lastActionCycleTime = micros();  // Reset timing
+
+      PWM_Config[i].pinLockState = false;
+    }
+  }
+}
+
+
+
+// Data Transsision scripts
+
+// Define pin numbers
+constexpr int CLOCK_PIN = 12;                    // GPIO Pin for the clock
+constexpr int DATA_Transmission_STATE_PIN = 10;  // GPIO Pin to indicate it is data transmission mode
+constexpr int DATA_PINS[] = { 9, 11, 14, 13 };   // GPIO Pins for 4-bit data *** Pin 13 is conencted to pin 11 of Other ESP32 So, in salve should be { 9, 13, 14, 11 } and in Master { 9, 11, 14, 13 }
+
+constexpr unsigned long desiredDelay = 8;  // for data transsision. this delay is High and Low duration in mircosec for slave to be able to read data.
+
+// Custom 4-Bit Communication through 4 Pins
+void Initiate4BitComInMaster() {
+  // Set the data pins as outputs
+  for (int i = 0; i < 4; ++i) {
+    pinMode(DATA_PINS[i], OUTPUT);
+  }
+  // Set the clock and data ready pins as outputs
+  pinMode(CLOCK_PIN, OUTPUT);
+  pinMode(DATA_Transmission_STATE_PIN, OUTPUT);
+
+  GPIO.out_w1tc = (1 << CLOCK_PIN);
+  GPIO.out_w1tc = (1 << DATA_Transmission_STATE_PIN);
+}
+
+void sendCharsToSlave(char* charToSend, int length) {
+
+  GPIO.out_w1ts = (1 << DATA_Transmission_STATE_PIN);  // Call Slave to be ready
+
+  for (int i = 0; i < length; ++i) {
+    // Extract the lower 4 bits of the character
+    uint8_t dataToSend = charTo4BitValue(charToSend[i]);
+
+    // Convert the 4-bit data to individual pin states
+    bool pin1 = dataToSend & 0b0001;
+    bool pin2 = dataToSend & 0b0010;
+    bool pin3 = dataToSend & 0b0100;
+    bool pin4 = dataToSend & 0b1000;
+    sendByteToSlave(pin1, pin2, pin3, pin4);  // Send each byte in the array
+  }
+
+  GPIO.out_w1tc = (1 << DATA_Transmission_STATE_PIN);
+  //delayMicroseconds(30);
+}
+
+uint8_t charTo4BitValue(char c) {
+  if (c >= '0' && c <= '9') {
+    return c - '0';  // '0' to '9' directly map to 0 to 9
+  } else if (c == 'A') {
+    return 0xA;  // 'A' maps to 10
+  } else if (c == 'B') {
+    return 0xB;  // 'B' maps to 11
+  } else if (c == 'C') {
+    return 0xC;  // 'C' maps to 12
+  } else if (c == 'D') {
+    return 0xD;  // 'D' maps to 13
+  } else if (c == 'E') {
+    return 0xE;  // 'E' maps to 14
+  } else if (c == 'F') {
+    return 0xF;  // 'F' maps to 15
+  }
+  return 0;  // Default case or undefined characters
+}
+
+void sendByteToSlave(bool pin1, bool pin2, bool pin3, bool pin4) {
+
+  // Set the bits on the data pins
+  if (pin1) GPIO.out_w1ts = (1 << DATA_PINS[0]);
+  else GPIO.out_w1tc = (1 << DATA_PINS[0]);
+
+  if (pin2) GPIO.out_w1ts = (1 << DATA_PINS[1]);
+  else GPIO.out_w1tc = (1 << DATA_PINS[1]);
+
+  if (pin3) GPIO.out_w1ts = (1 << DATA_PINS[2]);
+  else GPIO.out_w1tc = (1 << DATA_PINS[2]);
+
+  if (pin4) GPIO.out_w1ts = (1 << DATA_PINS[3]);
+  else GPIO.out_w1tc = (1 << DATA_PINS[3]);
+
+  // Toggle the clock
+  GPIO.out_w1ts = (1 << CLOCK_PIN);
+  delayMicroseconds(desiredDelay);
+  GPIO.out_w1tc = (1 << CLOCK_PIN);
+  delayMicroseconds(desiredDelay);
+}
